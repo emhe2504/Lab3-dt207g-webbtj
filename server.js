@@ -19,11 +19,58 @@ mongoose.connect("mongodb://localhost:27017/Lab3dt207g").then(() => {
     console.log("Could not connect to database du to: " + error);
 })
 
+//Works Schema
+const worksSchema = new mongoose.Schema({
+    companyname: {
+        type: String,
+        required: [true, "Ange företagsnamn"]
+    },
+    jobtitle: {
+        type: String,
+        required: [true, "Ange arbetstitel"]
+    },
+    location: {
+        type: String,
+        required: [true, "Ange företagets plats"]
+    },
+    startdate: {
+        type: Date,
+        required: [true, "Ange startdatum"]
+    },
+    enddate: {
+        type: Date,
+        required: [true, "Ange slutdatum"]
+    },
+    description: {
+        type: String,
+        required: [true, "Ange beskrivning"]
+    }
+});
+
+//Inkludera Schema till databas
+const Work = mongoose.model("Work", worksSchema);
+
+
 //Routes
-app.get("/"), async (req, res) => {
+app.get("/works", async (req, res) => {
+    try {
+        let result = await Work.find({});
 
-}
+        return res.json(result);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
 
+app.post("/works", async (req, res) => {
+    try {
+        let result = await Work.create(req.body);
+
+        return res.json(result);
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+});
 
 
 app.listen(port, () => {
