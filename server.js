@@ -63,14 +63,27 @@ app.get("/works", async (req, res) => {
 });
 
 app.post("/works", async (req, res) => {
+
     try {
         let result = await Work.create(req.body);
-
         return res.json(result);
+
     } catch (error) {
         return res.status(400).json(error);
     }
 });
+
+app.put("/works/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const newData = req.body;
+        let result = await Work.updateOne({ _id: id }, { $set: newData });
+
+        return res.json(result);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+})
 
 
 app.listen(port, () => {
