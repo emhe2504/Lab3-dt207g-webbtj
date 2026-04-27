@@ -85,6 +85,17 @@ app.put("/works/:id", async (req, res) => {
     }
 })
 
+app.delete("/works/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        let result = await Work.deleteOne({ _id: id });
+
+        return res.json(result);
+    } catch(error) {
+        return res.status(500).json(error);
+    }
+})
+
 
 app.listen(port, () => {
     console.log("Server is started at port: " + port)
