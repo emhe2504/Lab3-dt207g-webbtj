@@ -53,6 +53,10 @@ const Work = mongoose.model("Work", worksSchema);
 
 //Routes
 
+app.get("/", (req, res) => {
+    res.redirect("/works");
+});
+
 app.get("/works", async (req, res) => {
     try {
         let result = await Work.find({}); //Hitta alla arbeten
