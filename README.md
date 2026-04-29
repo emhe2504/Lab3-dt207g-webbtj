@@ -9,36 +9,17 @@ https://dt207g-lab2-webbtj.onrender.com](https://lab3-dt207g-webbtj.onrender.com
 API:et använder databasen mongoDB. 
 Schemat föjer följande struktur:
 
-companyname: {
-type: String,
-required: [true, "Ange företagsnamn"]
-},
+companyname: String
 
-jobtitle: {
-type: String,
-required: [true, "Ange arbetstitel"]
-},
+jobtitle: String
 
-location: {
-type: String,
-required: [true, "Ange företagets plats"]
-},
+location: String
 
-startdate: {
-type: Date,
-required: [true, "Ange startdatum"]
-},
+startdate: Date
 
-enddate: {
-type: Date,
-required: [true, "Ange slutdatum"]
-},
+enddate: Date
     
-description: {
-type: String,
-required: [true, "Ange beskrivning"]
-}
-
+description: String
 
 
 Här är länkar som kan användas för att nå API:
