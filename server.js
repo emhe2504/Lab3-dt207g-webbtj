@@ -87,7 +87,6 @@ app.post("/works", async (req, res) => {
     } catch (error) {
 
         //Validering (utefter required i Schema)
-        console.log(error.name);
 
         if (error.name === "ValidationError") {      //Om valideringsfel
 
@@ -101,7 +100,7 @@ app.post("/works", async (req, res) => {
 
         }
 
-        return res.status(500).json(error);
+        return res.status(400).json(error);
     }
 });
 
@@ -110,11 +109,28 @@ app.put("/works/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const newData = req.body;
-        let result = await Work.updateOne({ _id: id }, { $set: newData });  //Där id = req.params.id, sätt in den nya req.body
 
+        //Där id = req.params.id, sätt in den nya req.body (true på validering - required)
+        let result = await Work.updateOne({ _id: id }, { $set: newData }, { runValidators: true });
         return res.json(result);
+
     } catch (error) {
-        return res.status(500).json(error);
+
+        //Samma validering som i post
+
+        if (error.name === "ValidationError") {      //Om valideringsfel
+
+            const errorArray = [];
+
+            Object.values(error.errors).forEach(err => {
+                errorArray.push(err.message);
+            })
+
+            return res.status(400).json({ message: errorArray });
+
+        }
+
+        return res.status(400).json(error);
     }
 })
 
