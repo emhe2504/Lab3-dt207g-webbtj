@@ -11,10 +11,20 @@ API:et använder databasen mongoDB.
 Schemat föjer följande struktur:
 
 companyname: String
+
+
 jobtitle: String
+
+
 location: String
+
+
 startdate: Date
+
+
 enddate: Date
+
+
 description: String
 
 
