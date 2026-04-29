@@ -10,30 +10,34 @@ API:et använder databasen mongoDB.
 Schemat föjer följande struktur:
 
 companyname: {
-        type: String,
-        required: [true, "Ange företagsnamn"]
-    },
-    jobtitle: {
-        type: String,
-        required: [true, "Ange arbetstitel"]
-    },
-    location: {
-        type: String,
-        required: [true, "Ange företagets plats"]
-    },
-    startdate: {
-        type: Date,
-        required: [true, "Ange startdatum"]
-    },
-    enddate: {
-        type: Date,
-        required: [true, "Ange slutdatum"]
-    },
-    description: {
-        type: String,
-        required: [true, "Ange beskrivning"]
-    }
-});
+type: String,
+required: [true, "Ange företagsnamn"]
+},
+
+jobtitle: {
+type: String,
+required: [true, "Ange arbetstitel"]
+},
+
+location: {
+type: String,
+required: [true, "Ange företagets plats"]
+},
+
+startdate: {
+type: Date,
+required: [true, "Ange startdatum"]
+},
+
+enddate: {
+type: Date,
+required: [true, "Ange slutdatum"]
+},
+    
+description: {
+type: String,
+required: [true, "Ange beskrivning"]
+}
 
 
 
