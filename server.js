@@ -80,6 +80,20 @@ app.get("/works/:id", async (req, res) => {
 
 app.post("/works", async (req, res) => {
 
+    //returnera array med felmeddelanden om något missats
+
+    const errors = [];
+    if (!req.body.companyname) { errors.push(`Lägg till företagsnamn`); }
+    if (!req.body.jobtitle) { errors.push(`Lägg till arbetstitel`); }
+    if (!req.body.location) { errors.push(`Lägg till arbetets plats`); }
+    if (!req.body.startdate) { errors.push(`Lägg till startdatum`); }
+    if (!req.body.enddate) { errors.push(`Lägg till slutdatum`); }
+    if (!req.body.description) { errors.push(`Lägg till beskrivning`); }
+
+    if (errors.length > 0) {
+        return res.status(400).json({ message: errors });
+    }
+
     try {
         let result = await Work.create(req.body);   //Skapa arbete från req.body
         return res.json(result);
