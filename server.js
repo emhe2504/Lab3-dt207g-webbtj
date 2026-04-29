@@ -60,7 +60,7 @@ app.get("/works", async (req, res) => {
         return res.json(result);
 
     } catch (error) {
-        return res.status(500).json({ message: "Kunde inte hitta works" });
+        return res.status(500).json({ message: "Could not find works" });
     }
 });
 
@@ -69,54 +69,44 @@ app.get("/works/:id", async (req, res) => {
 
         const ID = req.params.id;
 
-        let result = await Work.find({ _id: ID });      //Hitta spcifikt arbete utefter id
-
+        let result = await Work.findById(ID);      //Hitta spcifikt arbete utefter id
+        if (!result) { return res.status(500).json({ message: "Kunde inte hitta work med matchande ID" }) }
         return res.json(result);
 
     } catch (error) {
-        return res.status(500).json( {message: "Kunde inte hitta work" });
+        return res.status(500).json({ message: "Could not find work" });
     }
 });
 
 app.post("/works", async (req, res) => {
 
-    //returnera array med felmeddelanden om något missats
-
-    const errors = [];
-    if (!req.body.companyname) { errors.push(`Lägg till företagsnamn`); }
-    if (!req.body.jobtitle) { errors.push(`Lägg till arbetstitel`); }
-    if (!req.body.location) { errors.push(`Lägg till arbetets plats`); }
-    if (!req.body.startdate) { errors.push(`Lägg till startdatum`); }
-    if (!req.body.enddate) { errors.push(`Lägg till slutdatum`); }
-    if (!req.body.description) { errors.push(`Lägg till beskrivning`); }
-
-    if (errors.length > 0) {
-        return res.status(400).json({ message: errors });
-    }
-
     try {
-        let result = await Work.create(req.body);   //Skapa arbete från req.body
+        let result = await Work.create(req.body);   //Skapa arbete utefter req.body
         return res.json(result);
 
     } catch (error) {
-        return res.status(400).json(error);
+
+        //Validering (utefter required i Schema)
+        console.log(error.name);
+
+        if (error.name === "ValidationError") {      //Om valideringsfel
+
+            const errorArray = [];
+
+            Object.values(error.errors).forEach(err => {
+                errorArray.push(err.message);
+            })
+
+            return res.status(400).json({ message: errorArray });
+
+        }
+
+        return res.status(500).json(error);
     }
 });
 
 app.put("/works/:id", async (req, res) => {
 
-    const errors = [];
-    if (!req.body.companyname) { errors.push(`Lägg till företagsnamn`); }
-    if (!req.body.jobtitle) { errors.push(`Lägg till arbetstitel`); }
-    if (!req.body.location) { errors.push(`Lägg till arbetets plats`); }
-    if (!req.body.startdate) { errors.push(`Lägg till startdatum`); }
-    if (!req.body.enddate) { errors.push(`Lägg till slutdatum`); }
-    if (!req.body.description) { errors.push(`Lägg till beskrivning`); }
-
-    if (errors.length > 0) {
-        return res.status(400).json({ message: errors });
-    }
-    
     try {
         const id = req.params.id;
         const newData = req.body;
@@ -131,10 +121,15 @@ app.put("/works/:id", async (req, res) => {
 app.delete("/works/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        let result = await Work.deleteOne({ _id: id });     //Radera en där id = req.params.id
+        let result = await Work.deleteOne({ _id: id });     //Radera work där id = req.params.id
 
-        return res.json(result);
-    } catch(error) {
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ error: "Kunde inte radera work, inget matchande id" });    //om inget raderades
+        }
+
+        return res.json({ message: "Work med id: " + req.params.id + " raderad" });    //om radering lyckats
+
+    } catch (error) {
         return res.status(500).json(error);
     }
 })
