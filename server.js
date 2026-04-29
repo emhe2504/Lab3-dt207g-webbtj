@@ -13,7 +13,7 @@ app.use(express.json());
 
 
 //Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/Lab3dt207g").then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("Successfully connected to MongoDB");
 }).catch((error) => {
     console.log("Could not connect to database du to: " + error);
