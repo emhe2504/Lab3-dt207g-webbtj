@@ -4,7 +4,7 @@ Detta repo innehåller kod för den webbtjänst jag skapat för lab3 i kursen dt
 
 Länken till api:
 
-https://dt207g-lab2-webbtj.onrender.com](https://lab3-dt207g-webbtj.onrender.com/works
+https://lab3-dt207g-webbtj.onrender.com/works
 
 API:et använder databasen mongoDB. 
 
