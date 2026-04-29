@@ -1,5 +1,5 @@
 
-Detta repo innehåller kod för den webbtjänst jag skapat för lab2 i kursen dt207g. API:et presenterar mina tidigare arbetserfarenheter.
+Detta repo innehåller kod för den webbtjänst jag skapat för lab3 i kursen dt207g. API:et presenterar mina tidigare arbetserfarenheter.
 
 
 Länken till api:
