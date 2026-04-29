@@ -52,20 +52,36 @@ const Work = mongoose.model("Work", worksSchema);
 
 
 //Routes
+
 app.get("/works", async (req, res) => {
     try {
-        let result = await Work.find({});
+        let result = await Work.find({}); //Hitta alla arbeten
 
         return res.json(result);
+
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ message: "Kunde inte hitta works" });
+    }
+});
+
+app.get("/works/:id", async (req, res) => {
+    try {
+
+        const ID = req.params.id;
+
+        let result = await Work.find({ _id: ID });      //Hitta spcifikt arbete utefter id
+
+        return res.json(result);
+
+    } catch (error) {
+        return res.status(500).json( {message: "Kunde inte hitta work" });
     }
 });
 
 app.post("/works", async (req, res) => {
 
     try {
-        let result = await Work.create(req.body);
+        let result = await Work.create(req.body);   //Skapa arbete från req.body
         return res.json(result);
 
     } catch (error) {
@@ -77,7 +93,7 @@ app.put("/works/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const newData = req.body;
-        let result = await Work.updateOne({ _id: id }, { $set: newData });
+        let result = await Work.updateOne({ _id: id }, { $set: newData });  //Där id = req.params.id, sätt in den nya req.body
 
         return res.json(result);
     } catch (error) {
@@ -88,7 +104,7 @@ app.put("/works/:id", async (req, res) => {
 app.delete("/works/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        let result = await Work.deleteOne({ _id: id });
+        let result = await Work.deleteOne({ _id: id });     //Radera en där id = req.params.id
 
         return res.json(result);
     } catch(error) {
