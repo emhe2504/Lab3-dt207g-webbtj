@@ -7,19 +7,18 @@ Länken till api:
 https://dt207g-lab2-webbtj.onrender.com](https://lab3-dt207g-webbtj.onrender.com/works
 
 API:et använder databasen mongoDB. 
+
 Schemat föjer följande struktur:
 
 companyname: String
-
 jobtitle: String
-
 location: String
-
 startdate: Date
-
 enddate: Date
-    
 description: String
+
+
+
 
 
 Här är länkar som kan användas för att nå API:
